@@ -2,8 +2,8 @@ import Camera from "@/components/common/camera";
 
 export default function Home() {
   return (
-    <div>
-      <h1>Take or Select a Picture</h1>
+    <div className="min-h-screen w-full flex flex-col items-center justify-start py-[5%]">
+      <h1 className="text-8xl w-max from-emerald-500 to-emerald-700 font-medium text-transparent bg-clip-text bg-gradient-to-r leading-normal mb-10">Moolaga PWA</h1>
       <Camera />
     </div>
   );
