@@ -27,6 +27,7 @@ export default function SignInForm({ onSuccess }: SignInFormProps) {
       toast.success("Signed In", { id: "SIGN_IN" });
       onSuccess?.();
     } catch (err) {
+      console.log(err);
       toast.error("Failed to sign in", { id: "SIGN_IN" });
     }
   }

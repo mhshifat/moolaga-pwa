@@ -1,1 +1,3 @@
-export interface IAuth {}
+export interface IAuth {
+  user: unknown;
+}

@@ -1,6 +1,6 @@
 "use client";
 
-import { createContext, PropsWithChildren, ReactElement, useCallback, useContext, useEffect, useRef, useState } from "react";
+import { createContext, PropsWithChildren, ReactElement, useCallback, useContext, useRef, useState } from "react";
 import Dialog from "../ui/dialog";
 import Divider from "../ui/divider";
 import { cn } from "@/utils/helpers";
@@ -72,7 +72,7 @@ export default function DialogProvider({ children }: PropsWithChildren) {
       document.body.style.overflow = 'unset';
       document.body.style.paddingRight = '0';
     }, 0);
-  }, [dialogState]);
+  }, []);
 
   return (
     <DialogCtx.Provider value={{

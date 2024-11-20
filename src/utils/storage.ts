@@ -1,6 +1,6 @@
 interface IStorage {
-  get<T extends {}>(key: string): Promise<T>;
-  save<T extends {}>(key: string, value: T): Promise<boolean>;
+  get<T extends object>(key: string): Promise<T>;
+  save<T extends object>(key: string, value: T): Promise<boolean>;
 }
 
 class LocalStorage implements IStorage {
@@ -15,7 +15,7 @@ class LocalStorage implements IStorage {
     }
   }
 
-  save<T extends {}>(key: string, value: T) {
+  save<T extends object>(key: string, value: T) {
     const jsonValue = JSON.stringify(value);
     localStorage.setItem(key, jsonValue);
     return Promise.resolve(true);

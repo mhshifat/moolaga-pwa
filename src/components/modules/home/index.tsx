@@ -1,12 +1,8 @@
 "use client";
 
-import axios from "axios";
-import slugify from "slugify";
-import { toast } from "sonner";
 import { storage } from "@/utils/storage";
 import { useEffect, useState } from "react";
 import Camera from "@/components/common/camera";
-import { dataURItoBlob } from "@/utils/helpers";
 import { useDialog } from "@/components/providers/dialog";
 import SignInForm from "../auth/sign-in-form";
 import UploadAttachmentsToMoolaga from "./upload-attachments-to-moolaga";
