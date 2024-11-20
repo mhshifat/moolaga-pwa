@@ -1,9 +1,16 @@
 "use client";
 
+import { jsPDF } from "jspdf";
+import { toast } from 'sonner';
 import { useRef, useState } from 'react';
 import Button from '../ui/button';
+import PDFViewer from './pdf-viewer';
 
-export default function Camera() {
+interface CameraProps {
+  onUploadApiCall: (src: string | null) => void;
+}
+
+export default function Camera({ onUploadApiCall }: CameraProps) {
   const videoRef = useRef<HTMLVideoElement | null>(null); // Type for the video element
   const [imageSrc, setImageSrc] = useState<string | null>(null); // Image source is a string or null
   const [hasTakenPicture, setHasTakenPicture] = useState<boolean>(false); // Boolean state for picture status
@@ -34,7 +41,15 @@ export default function Camera() {
       const ctx = canvas.getContext('2d');
       if (ctx) {
         ctx.drawImage(videoRef.current, 0, 0, canvas.width, canvas.height);
-        setImageSrc(canvas.toDataURL('image/png'));
+        const imgUrl = canvas.toDataURL('image/png');
+        const doc = new jsPDF({
+          orientation: canvas.width > canvas.height ? 'landscape' : 'portrait',
+          unit: 'px',
+          format: [canvas.width, canvas.height], // Set the dimensions in pixels
+        });
+        doc.addImage(imgUrl, 'PNG', 0, 0, canvas.width, canvas.height);
+        const pdfBlob = doc.output('blob');
+        setImageSrc(URL.createObjectURL(pdfBlob));
         setHasTakenPicture(true);
         setStartedCamera(false);
       }
@@ -50,7 +65,7 @@ export default function Camera() {
   const selectFromGallery = async () => {
     const input = document.createElement('input');
     input.type = 'file';
-    input.accept = 'image/*';
+    input.accept = '.pdf';
     input.onchange = (e: Event) => {
       const target = e.target as HTMLInputElement; // Explicitly cast to HTMLInputElement
       const file = target?.files?.[0];
@@ -58,6 +73,7 @@ export default function Camera() {
         const reader = new FileReader();
         reader.onload = () => {
           if (reader.result) {
+            if (!(reader.result as string)?.includes("application/pdf")) return toast.error("Only Pdf files are allowed");
             setImageSrc(reader.result as string);
             setHasTakenPicture(true);
           }
@@ -75,9 +91,11 @@ export default function Camera() {
           <video className='aspect-square rounded-md' ref={videoRef} autoPlay muted style={{ width: '100%' }} />
         </>
       )}
-      {hasTakenPicture && (
+      {hasTakenPicture && imageSrc && (
         <>
-          <img src={imageSrc || ''} alt="Captured" style={{ maxWidth: '100%' }} />
+          <PDFViewer
+            file={imageSrc}
+          />
         </>
       )}
       <div className='flex items-center justify-center gap-2 mt-10'>
@@ -86,6 +104,7 @@ export default function Camera() {
         {hasTakenPicture && <Button onClick={resetPicture}>Take Another Picture</Button>}
         <Button onClick={selectFromGallery}>Select From Gallery</Button>
       </div>
+      {imageSrc && <Button type='button' className='mt-3 w-full' onClick={() => onUploadApiCall?.(imageSrc)}>Upload to Moolaga</Button>}
     </div>
   );
 }
