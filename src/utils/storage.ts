@@ -11,6 +11,7 @@ class LocalStorage implements IStorage {
       const parsed = JSON.parse(value);
       return parsed;
     } catch (err) {
+      console.error(err);
       return null;
     }
   }
