@@ -32,6 +32,10 @@ export default {
           DEFAULT: "hsl(var(--border))"
         },
       },
+      fontFamily: {
+        "geist-mono": "var(--font-geist-mono)",
+        "geist-sans": "var(--font-geist-sans)",
+      }
     },
   },
   plugins: [],

@@ -4,15 +4,15 @@ import { cva } from "class-variance-authority";
 import { cn } from "@/utils/helpers";
 
 const buttonVariants = cva(
-  "w-max rounded-md flex item-center justify-center border border-white text-sm font-medium leading-[227%] disabled:!bg-foreground/20 disabled:!text-background disabled:cursor-not-allowed disabled:from-foreground/20 to:from-foreground/20",
+  "w-max rounded-md flex item-center justify-center border border-white text-sm md:text-base font-medium !leading-[227%] disabled:!bg-foreground/20 disabled:!text-background disabled:cursor-not-allowed disabled:from-foreground/20 to:from-foreground/20 font-geist-sans",
   {
     variants: {
       variant: {
-        default: "bg-gradient-to-r from-emerald-500 to-emerald-700 text-white",
+        default: "bg-gradient-to-r from-primary/70 to-primary/80 text-white",
         ghost: "bg-transparent text-foreground",
       },
       size: {
-        default: "h-[35px] px-[20px]",
+        default: "min-h-[35px] px-[20px]",
         icon: "h-[35px] aspect-square",
       },
     },

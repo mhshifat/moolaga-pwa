@@ -21,24 +21,26 @@ export default function HomePageContainer() {
 
   
   if (!hasCredentials) return (
-    <div className="max-w-[400px] w-full">
+    <div className="max-w-[400px] w-full flex-1 flex flex-col p-5">
       <SignInForm
         onSuccess={() => setHasCredentials(true)}
       />
     </div>
   )
   return (
-    <Camera
-      onUploadApiCall={(data) => openDialog({
-        title: "Upload",
-        description: "Please provide a name for the file",
-        content: (
-          <UploadAttachmentsToMoolaga
-            data={data}
-            onSuccess={closeDialog}
-          />
-        )
-      })}
-    />
+    <div className="w-full flex-1 flex flex-col py-5">
+      <Camera
+        onUploadApiCall={(data) => openDialog({
+          title: "Upload",
+          description: "Please provide a name for the file",
+          content: (
+            <UploadAttachmentsToMoolaga
+              data={data}
+              onSuccess={closeDialog}
+            />
+          )
+        })}
+      />
+    </div>
   )
 }

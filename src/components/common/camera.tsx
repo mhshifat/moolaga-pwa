@@ -26,10 +26,11 @@ export default function Camera({ onUploadApiCall }: CameraProps) {
           setStartedCamera(true);
         }
       } catch (err) {
-        console.error('Error accessing camera:', err);
+        console.log('Error accessing camera:', err);
+        toast.error("Please enable camera");
       }
     } else {
-      alert('Camera not supported');
+      toast.error('Camera not supported');
     }
   };
 
@@ -85,11 +86,11 @@ export default function Camera({ onUploadApiCall }: CameraProps) {
   };
 
   return (
-    <div>
+    <div className="w-full flex-1 px-5">
       {!hasTakenPicture && (
-        <>
-          <video className='aspect-square rounded-md' ref={videoRef} autoPlay muted style={{ width: '100%' }} />
-        </>
+        <div className="overflow-hidden bg-primary/10 rounded-lg aspect-[1/1.4]">
+          <video className='w-full h-full' ref={videoRef} autoPlay muted style={{ width: '100%' }} />
+        </div>
       )}
       {hasTakenPicture && imageSrc && (
         <>
@@ -98,13 +99,19 @@ export default function Camera({ onUploadApiCall }: CameraProps) {
           />
         </>
       )}
-      <div className='flex items-center justify-center gap-2 mt-10'>
-        {!hasTakenPicture && !startedCamera && <Button onClick={startCamera}>Start Camera</Button>}
-        {!hasTakenPicture && startedCamera && <Button onClick={takePicture}>Take Picture</Button>}
-        {hasTakenPicture && <Button onClick={resetPicture}>Take Another Picture</Button>}
-        <Button onClick={selectFromGallery}>Select From Gallery</Button>
+      <div className='flex flex-col items-center justify-center gap-2 mt-10'>
+        {!hasTakenPicture && !startedCamera && <Button className="flex-1 w-full" onClick={startCamera}>Start Camera</Button>}
+        {!hasTakenPicture && startedCamera && <Button className="flex-1 w-full" onClick={takePicture}>Take Picture</Button>}
+        {hasTakenPicture && <Button className="flex-1 w-full" onClick={resetPicture}>Take Another Picture</Button>}
+        <span className="text-xs font-geist-sans font-medium relative before:content-[''] before:w-[100%] before:bg-primary/50 before:flex before:h-[1px] before:top-1/2 before:absolute before:left-[150%] after:content-[''] after:w-[100%] after:bg-primary/50 after:flex after:h-[1px] after:top-1/2 after:absolute after:right-[150%]">OR</span>
+        <Button className="flex-1 w-full" onClick={selectFromGallery}>Select From Gallery</Button>
+        {imageSrc && (
+          <>
+            <span className="text-xs font-geist-sans font-medium relative before:content-[''] before:w-[100%] before:bg-primary/50 before:flex before:h-[1px] before:top-1/2 before:absolute before:left-[150%] after:content-[''] after:w-[100%] after:bg-primary/50 after:flex after:h-[1px] after:top-1/2 after:absolute after:right-[150%]">OR</span>
+            <Button type='button' className='w-full' onClick={() => onUploadApiCall?.(imageSrc)}>Upload to Moolaga</Button>
+          </>
+        )}
       </div>
-      {imageSrc && <Button type='button' className='mt-3 w-full' onClick={() => onUploadApiCall?.(imageSrc)}>Upload to Moolaga</Button>}
     </div>
   );
 }
