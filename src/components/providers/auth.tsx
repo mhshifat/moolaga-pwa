@@ -1,6 +1,6 @@
 "use client";
 
-import { createContext, PropsWithChildren, ReactElement, useCallback, useContext, useEffect, useRef, useState } from "react";
+import { createContext, PropsWithChildren, useCallback, useContext, useEffect, useState } from "react";
 import Spinner from "../common/spinner";
 import { storage } from "@/utils/storage";
 
@@ -23,7 +23,6 @@ export default function AuthProvider({ children }: PropsWithChildren) {
   });
 
   const login = useCallback((authState: AuthState) => {
-    console.log({ authState });
     setAuthState({
       ...authState,
       isInitializing: false
