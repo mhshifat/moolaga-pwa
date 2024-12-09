@@ -78,7 +78,7 @@ export default function UploadAttachmentsToMoolaga({ data, onSuccess }: UploadAt
       const formValues = form.getValues();
       formdata.append("company", formValues.company);
       formdata.append("file", blob, `${slugify(title)}.pdf`);
-      await axios.post(`${process.env.NEXT_PUBLIC_MOOLAGA_BASE_API_URL}/api/v2/attachments`, formdata, {
+      await axios.post(`${process.env.NEXT_PUBLIC_MOOLAGA_BASE_API_URL}/api/attachments/pwa/upload`, formdata, {
         headers: {
           "Content-Type": "multipart/formdata",
           "Authorization": token
