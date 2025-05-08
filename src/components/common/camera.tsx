@@ -19,7 +19,7 @@ export default function Camera({ onUploadApiCall }: CameraProps) {
   const startCamera = async () => {
     if (navigator.mediaDevices?.getUserMedia) {
       try {
-        const stream = await navigator.mediaDevices.getUserMedia({ video: true });
+        const stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: { exact: "environment" } } });
         if (videoRef.current) {
           videoRef.current.srcObject = stream;
           videoRef.current.play();
@@ -86,9 +86,9 @@ export default function Camera({ onUploadApiCall }: CameraProps) {
   };
 
   return (
-    <div className="w-full flex-1 px-5">
+    <div className="w-full flex-1 px-5 flex flex-col pb-10 gap-10">
       {!hasTakenPicture && (
-        <div className="overflow-hidden bg-primary/10 rounded-lg aspect-[1/1.4]">
+        <div className="overflow-hidden bg-primary/10 rounded-lg h-auto flex-1">
           <video className='w-full h-full' ref={videoRef} autoPlay muted style={{ width: '100%' }} />
         </div>
       )}
@@ -99,7 +99,7 @@ export default function Camera({ onUploadApiCall }: CameraProps) {
           />
         </>
       )}
-      <div className='flex flex-col items-center justify-center gap-2 mt-10'>
+      <div className='flex flex-col items-center justify-center gap-2 mt-auto'>
         {!hasTakenPicture && !startedCamera && <Button className="flex-1 w-full" onClick={startCamera}>Start Camera</Button>}
         {!hasTakenPicture && startedCamera && <Button className="flex-1 w-full" onClick={takePicture}>Take Picture</Button>}
         {hasTakenPicture && <Button className="flex-1 w-full" onClick={resetPicture}>Take Another Picture</Button>}
