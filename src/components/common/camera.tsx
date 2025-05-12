@@ -67,6 +67,7 @@ export default function Camera({ onUploadApiCall }: CameraProps) {
     const input = document.createElement('input');
     input.type = 'file';
     input.accept = 'image/*';
+    input.capture = "";
     input.onchange = (e: Event) => {
       const target = e.target as HTMLInputElement; // Explicitly cast to HTMLInputElement
       const file = target?.files?.[0];
