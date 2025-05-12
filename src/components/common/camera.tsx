@@ -66,7 +66,7 @@ export default function Camera({ onUploadApiCall }: CameraProps) {
   const selectFromGallery = async () => {
     const input = document.createElement('input');
     input.type = 'file';
-    input.accept = '.pdf';
+    input.accept = 'image/*';
     input.onchange = (e: Event) => {
       const target = e.target as HTMLInputElement; // Explicitly cast to HTMLInputElement
       const file = target?.files?.[0];
@@ -74,9 +74,29 @@ export default function Camera({ onUploadApiCall }: CameraProps) {
         const reader = new FileReader();
         reader.onload = () => {
           if (reader.result) {
-            if (!(reader.result as string)?.includes("application/pdf")) return toast.error("Only Pdf files are allowed");
-            setImageSrc(reader.result as string);
-            setHasTakenPicture(true);
+            if (!(reader.result as string)?.includes("image/")) return toast.error("Only image files are allowed");
+
+            const pdf = new jsPDF({
+              orientation: 'portrait',
+              unit: 'pt',
+              format: 'a4'
+            });
+        
+            const img = new Image();
+            img.onload = () => {
+              const imgWidth = pdf.internal.pageSize.getWidth();
+              const imgHeight = (img.height * imgWidth) / img.width;
+        
+              pdf.addImage(reader.result as string, 'JPEG', 0, 0, imgWidth, imgHeight);
+        
+              const blob = pdf.output('blob');
+              const url = URL.createObjectURL(blob);
+              setImageSrc(url);
+              setHasTakenPicture(true);
+            };
+        
+            img.onerror = () => toast.error("Failed to load image");
+            img.src = reader.result as string;
           }
         };
         reader.readAsDataURL(file);

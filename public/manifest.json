@@ -19,7 +19,7 @@
 	"display": "standalone",
 	"dir": "auto",
 	"lang": "en-US",
-	"name": "Moolaga PWA",
-	"short_name": "Moolaga PWA",
+	"name": "Moolaga App",
+	"short_name": "Moolaga App",
   "start_url": "/"
 }

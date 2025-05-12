@@ -16,7 +16,7 @@ const geistMono = localFont({
 });
 
 export const metadata: Metadata = {
-  title: "Moolaga PWA",
+  title: "Moolaga App",
   description: "",
   manifest: "/manifest.json",
   icons: {

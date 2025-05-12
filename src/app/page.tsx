@@ -7,7 +7,7 @@ export default function Home() {
       <div className="flex justify-center items-center gap-1 bg-gradient-to-r from-primary/70 to-primary/80 w-full h-auto py-5">
         <div className="flex justify-center items-center gap-1">
           <img className="w-[60px] h-[60px]" src="https://app.moolaga.net/img/moolaga_logo_white.png" alt="logo" role="presentation" />
-          <h1 className="text-2xl w-max font-medium text-background leading-normal font-geist-sans">Moolaga PWA</h1>
+          <h1 className="text-2xl w-max font-medium text-background leading-normal font-geist-sans">Moolaga App</h1>
         </div>
 
         <div className="flex-1 flex items-center px-5">
